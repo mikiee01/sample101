@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANVHS Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========================================================= -->
+<!-- PUBLIC NAVIGATION HEADER (LOGO ENLARGED BESIDE ANVHS)    -->
+<!-- ========================================================= -->
+<header id="publicHeader">
+    <div class="logo-container" style="display: flex; align-items: center; gap: 0.8rem;">
+        <!-- 🌟 Increased size from 65px to 75px to make it visibly more bigger -->
+        <img src="logo.png" alt="ANVHS Logo" class="school-logo" style="height: 65px; width: 65px; object-fit: cover; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+        <!-- Synchronized text sizing -->
+        <span class="logo-text" style="font-size: 1.8rem; font-weight: bold; color: var(--secondary);">ANVHS</span>
+    </div>
+    <nav>
+        <a href="#governanceSection">Governance</a>
+        <a href="#calendarSection">Calendar</a>
+        <a href="#announcements-heading">Announcements</a>
+        <button id="adminNavBtn" class="nav-admin-btn">🔑 Admin Portal</button>
+    </nav>
+</header>
+    <!-- ========================================================= -->
+    <!-- PUBLIC STUDENT VIEW INTERFACE                             -->
+    <!-- ========================================================= -->
+    <div id="studentView">
+
+        <!-- HERO INTRODUCTION BANNER -->
+        <section class="hero">
+            <h1>Welcome to ANVHS</h1>
+            <p>Nurturing minds, shaping characters, and empowering leaders of tomorrow.</p>
+            <a href="#announcements-heading" class="cta-btn">View Latest Updates</a>
+        </section>
+
+        <!-- VISION & MISSION CORE CARDS -->
+        <div class="vm-section">
+            <div class="card">
+                <h2>Our Vision</h2>
+                <p id="displayVision">Loading...</p>
+            </div>
+            <div class="card">
+                <h2>Our Mission</h2>
+                <p id="displayMission">Loading...</p>
+            </div>
+        </div>
+
+        <!-- SEPARATED CONTAINER 1: SCHOOL GOVERNANCE & LEADERSHIP -->
+        <section id="governanceSection" class="org-section">
+            <h2>School Governance & Leadership</h2>
+            <div class="org-tabs">
+                <button class="org-tab-btn active" data-org="staff">Administration & Staff</button>
+                <button class="org-tab-btn" data-org="sslg">SSLG Officers</button>
+            </div>
+            
+            <div class="org-container">
+                <div id="orgTreeStaff" class="org-tree-wrapper"></div>
+                <div id="orgTreeSslg" class="org-tree-wrapper hidden"></div>
+            </div>
+        </section>
+
+        <!-- SEPARATED CONTAINER 2: SCHOOL ACTIVITIES CALENDAR -->
+        <section id="calendarSection" class="calendar-section">
+            <h2 style="text-align: center; margin-bottom: 0.5rem;">School Activities Calendar</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #666;">
+                Stay updated with our scheduled events and academic activities.
+            </p>
+            <div id="publicCalendarGrid" class="calendar-grid"></div>
+        </section>
+
+        <!-- ANNOUNCEMENTS BOARD LEDGER -->
+        <section class="announcements-section">
+            <h2 id="announcements-heading" style="text-align: center; margin-bottom: 2rem;">Admin Announcements</h2>
+            <div id="announcement-list" class="announcement-container"></div>
+        </section>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- INTEGRATED ADMIN DASHBOARD PANELS LAYOUT                  -->
+    <!-- ========================================================= -->
+    <div id="adminDashboard" class="admin-wrapper hidden">
+        
+        <!-- VERTICAL NAVIGATION SIDEBAR PANEL -->
+        <aside class="admin-sidebar">
+            <h2>ANVHS Admin Panel</h2>
+            <div class="sidebar-menu">
+                <button class="menu-item active" data-target="adminAnnouncements">📢 Announcements</button>
+                <button class="menu-item" data-target="adminCalendar">📅 Calendar Ledger</button>
+                <button class="menu-item" data-target="adminOrgChart">👥 Roster Personnel</button>
+                <button class="menu-item" data-target="adminTextConfig">📝 Vision & Mission</button>
+            </div>
+            <button id="logoutBtn" class="sidebar-logout">Logout System</button>
+        </aside>
+
+        <!-- MAIN DISPLAY AREA FOR ACTIVE TAB PANELS -->
+        <div class="admin-content-area">
+
+            <!-- 1. ANNOUNCEMENTS LEDGER MANAGEMENT PANEL -->
+            <div id="adminAnnouncements" class="tab-panel">
+                <h2>Broadcast Announcements</h2>
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+                    <div class="form-group">
+                        <label>Bulletin Title</label>
+                        <input type="text" id="postTitle" placeholder="e.g., General Assembly Day">
+                    </div>
+                    <div class="form-group">
+                        <label>Author / Office</label>
+                        <input type="text" id="postAuthor" placeholder="e.g., Office of the Principal">
+                    </div>
+                    <div class="form-group">
+                        <label>Broadcast Message Content</label>
+                        <textarea id="postContent" rows="4" placeholder="Write announcement context paragraphs here..."></textarea>
+                    </div>
+                    <button id="submitPostBtn" class="btn btn-primary">Publish Broadcast</button>
+                </div>
+                
+                <h3>Active Broadcast Ledgers</h3>
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author Office</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminLedgerBody"></tbody>
+                </table>
+            </div>
+
+            <!-- 2. CALENDAR SCHEDULER MANAGEMENT PANEL -->
+            <div id="adminCalendar" class="tab-panel hidden">
+                <h2>School Activities Calendar Ledger</h2>
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+                    <div class="form-group">
+                        <label>Event Activity Title</label>
+                        <input type="text" id="eventTitle" placeholder="e.g., Intramural Meet Week">
+                    </div>
+                    <div class="form-group">
+                        <label>Execution Target Date</label>
+                        <input type="date" id="eventDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Category Group</label>
+                        <select id="eventCategory">
+                            <option value="academic">Academic / Assessment</option>
+                            <option value="activity">Extracurricular Activity</option>
+                            <option value="holiday">Official School Holiday</option>
+                        </select>
+                    </div>
+                    <button id="addEventBtn" class="btn btn-primary">Schedule Calendar Event</button>
+                </div>
+
+                <h3>Chronological Events Ledger</h3>
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Scheduled Date</th>
+                            <th>Event Description</th>
+                            <th>Category Group</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminCalendarLedgerBody"></tbody>
+                </table>
+            </div>
+
+            <!-- 3. ROSTER PERSONNEL ROSTER MANAGEMENT PANEL -->
+            <div id="adminOrgChart" class="tab-panel hidden">
+                <h2>Roster Node Tree Infrastructure</h2>
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+                    <div class="form-group">
+                        <label>Department Category Tree</label>
+                        <select id="nodeCategory">
+                            <option value="staff">Administration & Roster Faculty Staff</option>
+                            <option value="sslg">SSLG Student Officers</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Structure Tier Ranking Placement</label>
+                        <select id="nodeTier">
+                            <option value="tier-1">Tier-1 Leader Executive Level</option>
+                            <option value="tier-2">Tier-2 Coordinator Management Level</option>
+                            <option value="tier-3">Tier-3 Associate Staff Level</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Personnel Official Name</label>
+                        <input type="text" id="nodeName" placeholder="e.g., Juan D. Dela Cruz">
+                    </div>
+                    <div class="form-group">
+                        <label>Official Station Position Title / Role</label>
+                        <input type="text" id="nodeRole" placeholder="e.g., Department Head Master Teacher">
+                    </div>
+                    <button id="addNodeBtn" class="btn btn-primary">Inject Tree Node Member</button>
+                </div>
+
+                <h3>Roster Chart Personnel Ledgers</h3>
+                <table class="ledger-table">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Officer Name</th>
+                            <th>Official Station Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTreeLedgerBody"></tbody>
+                </table>
+            </div>
+
+            <!-- 4. CORE TEXT VISION MISSION CONFIGURATOR PANEL -->
+            <div id="adminTextConfig" class="tab-panel hidden">
+                <h2>School Mandated Text Configurations</h2>
+                <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
+                    <div class="form-group">
+                        <label>Official Institutional School Vision Statement</label>
+                        <textarea id="editVision" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Official Institutional School Mission Statement</label>
+                        <textarea id="editMission" rows="3"></textarea>
+                    </div>
+                    <button id="saveTextBtn" class="btn btn-primary">Commit Configuration Passes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- AUTHENTICATION CREDENTIALS MODAL GATE                     -->
+    <!-- ========================================================= -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-card">
+            <h2>Admin Portal Access</h2>
+            <div id="loginError" class="error-msg">Invalid Credentials!</div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="adminUser" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="adminPass" placeholder="Enter password">
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+                <button id="closeLoginBtn" class="btn btn-secondary">Cancel</button>
+                <button id="submitLoginBtn" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 ANVHS Portal. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

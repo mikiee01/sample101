@@ -1,0 +1,477 @@
+:root {
+    --primary: #0f4c81;
+    --secondary: #f5b041;
+    --dark: #1c2833;
+    --light: #f8f9f9;
+    --white: #ffffff;
+    --danger: #cb4335;
+    --sidebar-width: 240px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; scroll-behavior: smooth; }
+body { background: var(--light); color: var(--dark); }
+.hidden { display: none !important; }
+
+/* NAVBAR & HERO */
+header { background: var(--primary); padding: 1rem 5%; position: fixed; width: 100%; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
+.logo-container { display: flex; align-items: center; gap: 0.5rem; }
+.school-logo { height: 40px; border-radius: 50%; }
+.logo-text { font-size: 1.5rem; font-weight: bold; color: var(--secondary); }
+nav a { color: var(--white); text-decoration: none; margin-left: 1.5rem; }
+.nav-admin-btn { background: transparent; color: var(--secondary); border: 2px solid var(--secondary); padding: 0.3rem 1rem; border-radius: 20px; margin-left: 1.5rem; cursor: pointer; }
+
+.hero { height: 60vh; background: linear-gradient(rgba(15,76,129,0.8), rgba(28,40,51,0.9)), url('https://unsplash.com') center/cover; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--white); text-align: center; padding: 0 1rem; }
+.hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+.cta-btn { background: var(--secondary); color: var(--dark); padding: 0.7rem 1.5rem; border-radius: 25px; text-decoration: none; font-weight: bold; margin-top: 1rem; }
+
+/* CARDS & ORG CHART */
+.vm-section { padding: 4rem 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+.card { background: var(--white); padding: 2rem; border-radius: 10px; border-top: 5px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+.org-section { padding: 4rem 5%; background: var(--white); text-align: center; }
+.org-tabs { display: inline-flex; background: #ebedef; padding: 0.3rem; border-radius: 25px; margin: 2rem 0; }
+.org-tab-btn { border: none; background: transparent; padding: 0.5rem 1.5rem; border-radius: 20px; cursor: pointer; }
+.org-tab-btn.active { background: var(--primary); color: var(--white); }
+.org-container { display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; padding: 1rem 0; }
+.org-tier { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; width: 100%; margin-bottom: 1rem; }
+.org-node { background: var(--light); border: 1px solid #d5dbdb; border-radius: 8px; padding: 1rem; min-width: 220px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+.org-node[data-tree="staff"] { border-top: 4px solid var(--primary); }
+.org-node[data-tree="staff"].tier-1 { border-top: 4px solid #28b463; background: #f4fbf7; }
+.org-node[data-tree="sslg"] { border-top: 4px solid #3498db; }
+.org-node[data-tree="sslg"].tier-1 { border-top: 4px solid #8e44ad; background: #faf5fc; }
+.org-node h4 { margin-bottom: 0.2rem; color: var(--dark); font-size: 1rem; }
+.org-node span { font-size: 0.8rem; color: #666; }
+
+/* DYNAMIC CALENDAR STYLES */
+.calendar-section { padding: 4rem 10%; background: var(--white); }
+.calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+.calendar-item { background: var(--light); border-radius: 8px; padding: 1.5rem; text-align: left; box-shadow: 0 3px 6px var(--shadow); position: relative; }
+.calendar-item.academic { border-left: 5px solid #2980b9; }
+.calendar-item.holiday { border-left: 5px solid #e74c3c; }
+.calendar-item.activity { border-left: 5px solid #27ae60; }
+.calendar-date { font-weight: bold; font-size: 0.85rem; color: var(--primary); margin-bottom: 0.5rem; text-transform: uppercase; }
+.calendar-type-tag { display: inline-block; font-size: 0.7rem; font-weight: bold; padding: 0.2rem 0.5rem; border-radius: 4px; margin-top: 0.8rem; text-transform: uppercase; background: #e5e7e9; }
+
+/* ANNOUNCEMENTS & MODALS */
+.announcements-section { padding: 4rem 10%; background: #ebedef; }
+.announcement-container { display: flex; flex-direction: column; gap: 1rem; max-width: 700px; margin: 0 auto; }
+.announcement-box { background: var(--white); padding: 1.5rem; border-left: 5px solid var(--secondary); border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.announcement-meta { font-size: 0.8rem; color: #7f8c8d; margin-bottom: 0.5rem; }
+
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 2000; }
+.modal-card { background: var(--white); padding: 2rem; border-radius: 10px; width: 100%; max-width: 350px; }
+.error-msg { color: var(--danger); font-size: 0.85rem; margin-bottom: 1rem; display: none; font-weight: bold; }
+
+/* PANEL SIDEBAR LAYOUT */
+.form-group { margin-bottom: 1rem; text-align: left; }
+.form-group label { display: block; margin-bottom: 0.3rem; font-size: 0.9rem; font-weight: bold; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+.btn { padding: 0.5rem 1.2rem; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+.btn-primary { background: var(--primary); color: var(--white); }
+.btn-secondary { background: #e5e7e9; }
+
+.admin-wrapper { display: flex; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 1500; background: #f4f6f6; }
+.admin-sidebar { width: var(--sidebar-width); background: var(--primary); color: var(--white); padding: 1.5rem; display: flex; flex-direction: column; gap: 2rem; }
+.sidebar-menu { display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+.menu-item { background: transparent; border: none; color: #fff; padding: 0.7rem; text-align: left; cursor: pointer; border-radius: 4px; }
+.menu-item.active, .menu-item:hover { background: rgba(255,255,255,0.15); color: var(--secondary); font-weight: bold; }
+.sidebar-logout { background: var(--danger); color: white; padding: 0.5rem; border: none; border-radius: 4px; cursor: pointer; }
+.admin-content-area { flex-grow: 1; padding: 2rem; overflow-y: auto; }
+.ledger-table { width: 100%; border-collapse: collapse; background: white; margin-top: 0.5rem; }
+.ledger-table th, .ledger-table td { padding: 0.7rem; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+.ledger-table th { background: #f2f2f2; }
+.btn-del { background: var(--danger); color: white; border: none; padding: 0.2rem 0.5rem; border-radius: 3px; cursor: pointer; }
+footer { background: var(--dark); color: var(--white); text-align: center; padding: 1.5rem; font-size: 0.85rem; }
+
+@media(max-width: 768px) {
+    header { flex-direction: column; gap: 0.5rem; }
+    nav a { margin-left: 0.5rem; }
+    .admin-wrapper { flex-direction: column; }
+    .admin-sidebar { width: 100%; height: auto; }
+}
+body.dark-theme {
+    background: #12181f;
+    color: #eaeded;
+}
+body.dark-theme .card, 
+body.dark-theme .org-node, 
+body.dark-theme .calendar-item, 
+body.dark-theme .announcement-box,
+body.dark-theme .modal-card {
+    background: #1c2833;
+    color: #f8f9f9;
+    border-color: #34495e;
+}
+body.dark-theme .announcement-meta,
+body.dark-theme .org-node span {
+    color: #bdc3c7;
+}
+/* --- SEPARATED WRAPPERS STRUCTURAL BLOCKS --- */
+#governanceSection {
+    background: var(--white);
+    border-bottom: 1px solid #ebedef;
+    padding: 4rem 5%;
+}
+
+#calendarSection {
+    background: var(--light); /* Subtle shift in background color for visible distinction */
+    padding: 4rem 10%;
+    border-bottom: 1px solid #d5dbdb;
+}
+
+/* Structural container limits override */
+.org-tree-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Ensure clean grid sizing transitions for calendar views */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+/* --- TAB TRANSITION ANIMATIONS --- */
+.org-tree-wrapper {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* When the hidden class is removed, trigger the fade-in and slide-up */
+.org-tree-wrapper:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* ========================================================= */
+/* SYSTEM INTERFACE ENLARGEMENT LAYER                        */
+/* ========================================================= */
+
+/* 1. Scale up the base root font metric uniformly */
+html {
+    font-size: 18px !important; /* Increases entire layout baseline grid relative to standard 16px */
+}
+
+/* 2. Expand global content layout wrappers */
+.org-container, 
+.calendar-grid, 
+.announcement-container, 
+.vm-section {
+    max-width: 1400px !important; /* Permits components to fill widescreen layouts wider */
+}
+
+/* 3. Magnify Global Navigation Header Row */
+header {
+    padding: 1.5rem 5% !important; /* Taller navigation bar spacing */
+}
+.logo-text {
+    font-size: 1.8rem !important; /* Prominent portal logo branding text */
+}
+nav a {
+    font-size: 1.1rem !important;
+    margin-left: 2rem !important;
+}
+.nav-admin-btn {
+    padding: 0.5rem 1.5rem !important;
+    font-size: 1.05rem !important;
+}
+
+/* 4. Upscale Administration Dashboard Controls & Management Workspace */
+.admin-sidebar {
+    width: 300px !important; /* Wider control sidebar panel workspace */
+    gap: 2.5rem !important;
+}
+.admin-sidebar h2 {
+    font-size: 1.6rem !important;
+}
+.menu-item {
+    padding: 0.9rem !important; /* Larger interactive clickable navigation selections */
+    font-size: 1.1rem !important;
+}
+.admin-content-area {
+    padding: 3rem !important; /* Spaciously framed management deck view panels */
+}
+.ledger-table th, 
+.ledger-table td {
+    padding: 1rem !important; /* Generous text spacing dimensions in database records tables */
+    font-size: 1.05rem !important;
+}
+
+/* 5. Enlarge Interactive Form Control Fields */
+.form-group label {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.5rem !important;
+}
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+    padding: 0.8rem 1rem !important; /* Substantial typing text box targets */
+    font-size: 1.1rem !important;
+}
+.btn {
+    padding: 0.8rem 2.2rem !important; /* Impactful dashboard action submit buttons */
+    font-size: 1.1rem !important;
+}
+.btn-del {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.95rem !important;
+}
+/* ========================================================= */
+/* FINAL: ADMIN DASHBOARD BACKGROUND LOGO WATERMARK (750PX)  */
+/* ========================================================= */
+
+.admin-wrapper .admin-content-area {
+    position: relative !important;
+    background-image: url('logo.png') !important; 
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 750px !important; /* 🌟 Perfectly adjusted down to 750px */
+    background-color: #f4f6f6 !important; 
+    z-index: 1 !important;
+    
+    /* Dedicated Viewport Scrollbar Boundaries */
+    height: 100vh !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
+
+/* 1. Window Frame Anchor Lock (Blocks browser window double-scrolling) */
+.admin-wrapper {
+    height: 100vh !important;
+    overflow: hidden !important;
+}
+
+/* 2. Workspace Backdrop Tint Overlay (Sharp flat transparency, no blur) */
+.admin-wrapper .admin-content-area::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background-color: rgba(244, 246, 246, 0.65) !important;
+    backdrop-filter: none !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+
+/* 3. Translucent Input Forms & Action Cards */
+.admin-wrapper .tab-panel div[style*="background: white"],
+.admin-wrapper .tab-panel div[style*="background:white"] {
+    background-color: rgba(255, 255, 255, 0.60) !important;
+    backdrop-filter: none !important;
+    border: 1px solid #d5dbdb !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* 4. Translucent Data Tables & Flat Headers */
+.admin-wrapper .ledger-table {
+    background-color: rgba(255, 255, 255, 0.50) !important;
+    backdrop-filter: none !important;
+}
+.admin-wrapper .ledger-table th {
+    background-color: rgba(235, 237, 239, 0.85) !important;
+}
+
+/* 5. Solid Sidebar Navigation Container Lock */
+.admin-sidebar {
+    background-color: var(--primary) !important;
+    opacity: 1.0 !important;
+    backdrop-filter: none !important;
+    z-index: 100 !important;
+}
+
+/* 6. Professional Custom Scrollbar Styling (Matches your primary blue accent) */
+.admin-wrapper .admin-content-area::-webkit-scrollbar {
+    width: 10px !important;
+}
+.admin-wrapper .admin-content-area::-webkit-scrollbar-track {
+    background: #ebedef !important;
+}
+.admin-wrapper .admin-content-area::-webkit-scrollbar-thumb {
+    background: var(--primary) !important;
+    border-radius: 5px !important;
+}
+.admin-wrapper .admin-content-area::-webkit-scrollbar-thumb:hover {
+    background: var(--dark) !important;
+}
+
+/* Layering Protection Pass (Forces dashboard interactive tools above background image) */
+.admin-wrapper .admin-content-area > * {
+    position: relative !important;
+    z-index: 2 !important;
+}
+/* ========================================================= */
+/* UNIVERSAL RESPONSIVENESS: MOBILE & DESKTOP OPTIMIZATION   */
+/* ========================================================= */
+
+/* --- 1. GLOBAL LAYOUT LIMITS (DESKTOP & MOBILE BASE) --- */
+body {
+    overflow-x: hidden !important; /* Silences unwanted horizontal page breakage on phones */
+}
+
+/* Fluid spacing adjustments for text frames */
+.vm-section, .org-section, .calendar-section, .announcements-section {
+    padding: 4rem 5% !important; /* Dynamically shrinks padding on tight mobile screens */
+}
+
+/* --- 2. MOBILE BASE BREAKPOINTS OVERRIDES (768px and down) --- */
+@media screen and (max-width: 768px) {
+    
+    /* --- Public Header & Navigation --- */
+    header {
+        position: static !important; /* Unlocks fixed positioning so it doesn't cover text on small screens */
+        flex-direction: column !important;
+        gap: 1rem !important;
+        padding: 1.2rem !important;
+        text-align: center;
+    }
+    .logo-container {
+        flex-direction: column !important;
+        gap: 0.3rem !important;
+    }
+    nav {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 0.8rem !important;
+        width: 100%;
+    }
+    nav a {
+        margin: 0 0.5rem !important;
+        font-size: 1rem !important;
+    }
+    .nav-admin-btn {
+        margin-left: 0 !important;
+        width: 100%; /* Makes login button easy to tap on phones */
+        text-align: center;
+    }
+
+    /* --- Hero Presentation Section --- */
+    .hero {
+        height: auto !important;
+        padding: 5rem 1rem !important;
+    }
+    .hero h1 {
+        font-size: 2.2rem !important; /* Scale down titles cleanly on mobile devices */
+    }
+
+    /* --- Core Vision & Mission Cards --- */
+    .vm-section {
+        grid-template-columns: 1fr !important; /* Drops side-by-side layout into a single vertical column */
+        gap: 1.5rem !important;
+    }
+
+    /* --- Governance Roster Nodes Chart --- */
+    .org-tier {
+        flex-direction: column !important; /* Collapses nested tree branches into clean rows */
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    .org-node {
+        width: 100% !important;
+        max-width: 320px !important;
+    }
+
+    /* --- Activities Calendar & Bulletins Grid --- */
+    .calendar-grid {
+        grid-template-columns: 1fr !important; /* Ensures event tiles fill mobile screen widths perfectly */
+        gap: 1.2rem !important;
+    }
+    
+    /* --- Admin Control Dashboard Layer --- */
+    .admin-wrapper {
+        position: static !important; /* Disables viewport locks on phone screens */
+        flex-direction: column !important; /* Positions navigation bar on top, workspace panel underneath */
+        height: auto !important;
+    }
+    .admin-sidebar {
+        width: 100% !important;
+        height: auto !important;
+        padding: 1.2rem !important;
+        position: static !important;
+    }
+    .sidebar-menu {
+        flex-direction: row !important; /* Converts vertical panel items into horizontal scroll bars */
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        padding-bottom: 0.5rem !important;
+        gap: 0.5rem !important;
+    }
+    .menu-item {
+        display: inline-block !important;
+        padding: 0.6rem 1rem !important;
+        font-size: 0.95rem !important;
+    }
+    .admin-content-area {
+        width: 100% !important;
+        height: auto !important;
+        padding: 1.5rem 1rem !important;
+        overflow-y: visible !important; /* Hands scrolling control back safely to the mobile phone touch gestures */
+        background-size: 320px !important; /* Automatically shrinks background logo size so it fits compact phone layouts */
+    }
+    
+    /* Make Admin forms responsive */
+    .admin-content-area div[style*="background: white"],
+    .admin-content-area div[style*="background:white"] {
+        padding: 1rem !important;
+    }
+    
+    /* --- Management Ledger Tables Responsive Scroll --- */
+    .ledger-table {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important; /* Adds a swift side-scroll track to large tables on compact screens */
+        white-space: nowrap !important;
+    }
+    
+    /* --- Authentication Gate Overlay --- */
+    .modal-card {
+        width: 90% !important;
+        margin: 0 auto !important;
+    }
+}
+
+/* --- 3. WIDESCREEN DESKTOP OPTIMIZATIONS (1200px and up) --- */
+@media screen and (min-width: 1200px) {
+    .vm-section, .org-section, .calendar-section, .announcements-section {
+        max-width: 1400px !important;
+        margin-left: auto !important;
+        margin-right: auto !important; /* Centers layouts on grand desktop setups */
+    }
+    .vm-section {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .calendar-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    }
+}
+@media screen and (max-width: 768px) {
+    /* Auto-adjust layout alignment for large logo assets on mobile phone displays */
+    header .school-logo {
+        height: 75px !important; /* Slightly scales down on phones so it remains perfectly clean */
+        width: 75px !important;
+        margin-bottom: 0.3rem;
+    }
+    header .logo-text {
+        font-size: 1.6rem !important;
+    }
+}
+/* ========================================================= */
+/* HOVER ANIMATION MODULE: HEADER SCHOOL LOGO                */
+/* ========================================================= */
+
+.logo-container .school-logo {
+    /* Establishes a smooth 0.3-second transition rate curve */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    cursor: pointer;
+}
+
+/* Triggers when students move their mouse pointer over the logo */
+.logo-container:hover .school-logo {
+    transform: scale(1.08) !important; /* Elegant, subtle 8% zoom enhancement */
+}
